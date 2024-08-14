@@ -1,17 +1,33 @@
 pipeline {
     agent any
+    tools {
+        nodejs 'nodejs'
+    }
     stages {
-        stage('build') {
+        stage('Prepare') {
+            steps {
+                sh 'npm install -g yarn'
+            }
+        }
+        stage('install and build') {
             steps {
                 echo 'building application'
+                sh 'yarn install'
+                sh 'yarn build'
             }
         }
-        stage('test') {
+        stage('deploy dev') {
+            when {
+                branch 'dev'
+            }
             steps {
-                echo 'testing application'
+                echo 'deploy dev'
             }
         }
-        stage('deploy') {
+        stage('deploy production') {
+            when {
+                branch 'master'
+            }
             steps {
                 echo 'deploying application'
             }
