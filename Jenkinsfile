@@ -15,8 +15,7 @@ pipeline {
                 echo 'building application'
                 sh 'yarn install'
                 sh 'yarn build'
-                sh 'docker build -t my-react-jenkins .'
-                sh 'docker run -d -p 5173:5173 my-react-jenkins'
+                sh 'docker ps'
             }
         }
         stage('deploy dev') {
